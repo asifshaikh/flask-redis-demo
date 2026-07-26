@@ -24,5 +24,10 @@ def get_posts():
     redis_client.setex(CACHE_KEY, CACHE_EXPIRATION, str(response.json()))
     return jsonify(response.json())
 
+@app.route('/clear_cache', methods=['DELETE'])
+def clear_cache():
+    # Clear the cached data in Redis
+    redis_client.delete(CACHE_KEY)
+    return jsonify({"message": "Cache cleared successfully."})
 if __name__ == '__main__':
     app.run(debug=True)
